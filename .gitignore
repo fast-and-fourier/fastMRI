@@ -138,7 +138,7 @@ dmypy.json
 cython_debug/
 
 
-# Ignore Data and Result directory
+# Ignore below directories
 Data/
 result/
 .idea/
