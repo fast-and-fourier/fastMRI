@@ -17,4 +17,6 @@ for i in range(1, 6):
     plt.subplot(1, 3, 3)
     plt.imshow(target[1, :, :])
     plt.title('target')
+    
+    print(f"Displayed image #{i}...")
     plt.show()
