@@ -18,5 +18,5 @@ for i in range(1, 6):
     plt.imshow(target[1, :, :])
     plt.title('target')
     
-    print(f"Displayed image #{i}...")
+    print(f"Displaying image #{i}...")
     plt.show()
