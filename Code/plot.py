@@ -20,4 +20,3 @@ for i in range(1, 6):
     
     print(f"Displaying image #{i}...")
     plt.show()
-    #test, please delete this.
