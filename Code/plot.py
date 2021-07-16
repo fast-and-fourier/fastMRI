@@ -2,7 +2,7 @@ import h5py
 import matplotlib.pyplot as plt
 
 for i in range(1, 6):
-    f = h5py.File(f"../result/test_Unet/reconstructions_val/brain{i}_sample.h5", 'r')
+    f = h5py.File(f"../result/test_Unet/reconstructions_val/brain{i}.h5", 'r')
     input = f['input']
     recon = f['reconstruction']
     target = f['target']
