@@ -10,10 +10,12 @@ class Unet(nn.Module):
         self.in_chans = in_chans
         self.out_chans = out_chans
 
-        self.first_block = ConvBlock(in_chans, 2)
-        self.down1 = Down(2, 4)
-        self.up1 = Up(4, 2)
-        self.last_block = nn.Conv2d(2, out_chans, kernel_size=1)
+        self.first_block = ConvBlock(in_chans, 64)
+        self.down1 = Down(64, 128)
+        self.down2 = Down(128, 256)
+        self.up1 = Up(256, 128)
+        self.up2 = Up(128, 64)
+        self.last_block = nn.Conv2d(64, out_chans, kernel_size=1)
 
     def norm(self, x):
         b, h, w = x.shape
@@ -30,9 +32,11 @@ class Unet(nn.Module):
         input, mean, std = self.norm(input)
         input = input.unsqueeze(1)
         d1 = self.first_block(input)
-        m0 = self.down1(d1)
-        u1 = self.up1(m0, d1)
-        output = self.last_block(u1)
+        d2 = self.down1(d1)
+        m0 = self.down2(d2)
+        u1 = self.up1(m0, d2)
+        u2 = self.up2(u1, d1)
+        output = self.last_block(u2)
         output = output.squeeze(1)
         output = self.unnorm(output, mean, std)
 
