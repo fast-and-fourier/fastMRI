@@ -15,7 +15,7 @@ class SSIM(SSIMLoss):
             
     def forward(self, X, Y, data_range):
         if len(X.shape) != 2:
-            raise NotImplementedError('Dimension of first input is {} rather than 2'.format(len(X.shape)))
+            raise NotImplementedError('Dimension of first input is {} rather than 2'.format(len(X.shape))) 
         if len(Y.shape) != 2:
             raise NotImplementedError('Dimension of first input is {} rather than 2'.format(len(Y.shape)))
             
