@@ -139,11 +139,12 @@ cython_debug/
 
 
 # Ignore below directories
-Data/
-result/
-.idea/
+Data/image_Leaderboard
+Data/train
+Data/val
+Data/val_tmp
+result
+.idea
 .DS_Store
-leaderboard_eval.py
-plot.py
-test.py
-t.py
+Code/plot.py
+Code/test.py
