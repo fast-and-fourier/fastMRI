@@ -94,34 +94,42 @@ def save_model(args, exp_dir, epoch, model, optimizer, best_val_loss, is_new_bes
 
         
 def train(args):
+    # Use GPU if available
     device = torch.device(f'cuda:{args.GPU_NUM}' if torch.cuda.is_available() else 'cpu')
     torch.cuda.set_device(device)
     print('Current cuda device: ', torch.cuda.current_device())
     
+    # Select Unet
     model = Unet(in_chans = args.in_chans, out_chans = args.out_chans)
+    
+    # Upload the model and loss type to device
     model.to(device=device)
     loss_type = SSIMLoss().to(device=device)
+
+    # Select optimizer
     optimizer = torch.optim.Adam(model.parameters(), args.lr)
 
     best_val_loss = 1.
-    start_epoch = 0
+    start_epoch = 1
 
-    
     train_loader = create_data_loaders(data_path = args.data_path_train, args = args)
     val_loader = create_data_loaders(data_path = args.data_path_val, args = args)
 
-    for epoch in range(start_epoch, args.num_epochs):
+    for epoch in range(start_epoch, args.num_epochs+1):
         print(f'Epoch #{epoch:2d} ............... {args.net_name} ...............')
         
+        # Train
         train_loss, train_time = train_epoch(args, epoch, model, train_loader, optimizer, loss_type)
-        val_loss, num_subjects, reconstructions, targets, inputs, val_time = validate(args, model, val_loader)
 
+        # Validation
+        val_loss, num_subjects, reconstructions, targets, inputs, val_time = validate(args, model, val_loader)
         val_loss = val_loss / num_subjects
 
+        # Update the best validation loss
         is_new_best = val_loss < best_val_loss
         best_val_loss = min(best_val_loss, val_loss)
 
-        save_model(args, args.exp_dir, epoch + 1, model, optimizer, best_val_loss, is_new_best)
+        save_model(args, args.exp_dir, epoch, model, optimizer, best_val_loss, is_new_best)
         print(
             f'Epoch = [{epoch:4d}/{args.num_epochs:4d}] TrainLoss = {train_loss:.4g} '
             f'ValLoss = {val_loss:.4g} TrainTime = {train_time:.4f}s ValTime = {val_time:.4f}s',
