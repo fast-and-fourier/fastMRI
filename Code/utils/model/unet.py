@@ -10,16 +10,16 @@ class Unet(nn.Module):
         self.in_chans = in_chans
         self.out_chans = out_chans
 
-        self.first_block = ConvBlock(in_chans, 64)
-        self.down1 = Down(64, 128)
-        self.down2 = Down(128, 256)
-        self.down3 = Down(256, 512)
-        self.down4 = Down(512, 1024)
-        self.up1 = Up(1024, 512)
-        self.up2 = Up(512, 256)
-        self.up3 = Up(256, 128)
-        self.up4 = Up(128, 64)
-        self.last_block = nn.Conv2d(64, out_chans, kernel_size=1)
+        self.first_block = ConvBlock(in_chans, 32)
+        self.down1 = Down(32, 64)
+        self.down2 = Down(64, 128)
+        self.down3 = Down(128, 256)
+        self.down4 = Down(256, 512)
+        self.up1 = Up(512, 256)
+        self.up2 = Up(256, 128)
+        self.up3 = Up(128, 64)
+        self.up4 = Up(64, 32)
+        self.last_block = nn.Conv2d(32, out_chans, kernel_size=1)
 
     def norm(self, x):
         b, h, w = x.shape
@@ -58,10 +58,10 @@ class ConvBlock(nn.Module):
         self.in_chans = in_chans
         self.out_chans = out_chans
         self.layers = nn.Sequential(
-            nn.Conv2d(in_chans, out_chans, kernel_size=3, padding=1),
+            nn.Conv2d(in_chans, out_chans, kernel_size=5, padding=2),
             nn.BatchNorm2d(out_chans),
             nn.ReLU(inplace=True),
-            nn.Conv2d(out_chans, out_chans, kernel_size=3, padding=1),
+            nn.Conv2d(out_chans, out_chans, kernel_size=5, padding=2),
             nn.BatchNorm2d(out_chans),
             nn.ReLU(inplace=True)
         )
