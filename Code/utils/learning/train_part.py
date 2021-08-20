@@ -99,14 +99,14 @@ def train(args):
     torch.cuda.set_device(device)
     print('Current cuda device: ', torch.cuda.current_device())
     
-    # Select Unet
+    # Model
     model = Unet(in_chans = args.in_chans, out_chans = args.out_chans)
     
     # Upload the model and loss type to device
     model.to(device=device)
     loss_type = SSIMLoss().to(device=device)
 
-    # Select optimizer
+    # Optimizer
     optimizer = torch.optim.Adam(model.parameters(), args.lr)
 
     best_val_loss = 1.
