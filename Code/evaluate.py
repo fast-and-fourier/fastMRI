@@ -7,7 +7,7 @@ def parse():
                                     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('-g', '--GPU_NUM', type=int, default=0, help='GPU number to allocate')
     parser.add_argument('-b', '--batch-size', type=int, default=8, help='Batch size')
-    parser.add_argument('-n', '--net_name', type=Path, default='test_Unet', help='Name of network')
+    parser.add_argument('-n', '--net_name', type=Path, default='Unet', help='Name of network')
     parser.add_argument('-p', '--data_path', type=Path, default='../Data/image_Leaderboard/', help='Directory of test data')
     
     parser.add_argument('--in-chans', type=int, default=1, help='Size of input channels for network')
