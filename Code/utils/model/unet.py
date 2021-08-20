@@ -61,7 +61,7 @@ class ConvBlock(nn.Module):
             nn.Conv2d(in_chans, out_chans, kernel_size=3, padding=1),
             nn.BatchNorm2d(out_chans),
             nn.ELU(inplace=True),
-            nn.Conv2d(out_chans, out_chans, kernel_size=5, padding=2),
+            nn.Conv2d(out_chans, out_chans, kernel_size=3, padding=1),
             nn.BatchNorm2d(out_chans),
             nn.ELU(inplace=True)
         )

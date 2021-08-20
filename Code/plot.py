@@ -2,7 +2,7 @@ import h5py
 import matplotlib.pyplot as plt
 
 for i in range(1, 6):
-    f = h5py.File(f"../Data/train/brain{i}.h5", 'r')
+    f = h5py.File(f"../Data/image_Leaderboard/brain_test{i}.h5", 'r')
     input = f['image_input']
     grappa = f['image_grappa']
     label = f['image_label']
